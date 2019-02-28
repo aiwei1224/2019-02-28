@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Bootstrap 实例 - 面板标题</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+	<script type='text/javascript' src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+	<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js'></script>
+	<script type='text/javascript' src="GaugeMeter.js"></script>
+	<script src="../raphael-2.1.4.min.js"></script>
+	<script src="../justgage.js"></script>
+	<script>
+	window.onload = function () {
+
+		var chart = new CanvasJS.Chart("chartContainer", {
+			animationEnabled: true,
+			theme: "light2",
+
+			axisX: {
+				title: "time",
+
+				suffix: "hr"
+      },
+			axisY:{
+				includeZero: false
+			},
+			data: [{
+				type: "line",
+				dataPoints: [
+					{ x: 1, y: 10 },
+					{ x: 2,y: 20},
+					{ x: 3,y: 30, indexLabel: "highest",markerColor: "red", markerType: "triangle" },
+					{ x: 4,y: 20 },
+
+
+				]
+			}]
+		});
+		chart.render();
+
+
+		var chart2 = new CanvasJS.Chart("chartContainer2", {
+			animationEnabled: true,
+			theme: "light2",
+			title:{
+				text: "產能"
+			},
+			axisY:{
+				includeZero: false
+			},
+			data: [{
+				type: "line",
+				dataPoints: [
+					{ x:10, y: 10 },
+					{ x:20,y: 40, indexLabel: "highest",markerColor: "red", markerType: "triangle"},
+					{ x:30,y: 20 },
+					{ x:40,y: 30 },
+
+
+				]
+			}]
+		});
+		chart2.render();
+
+		var chart3 = new CanvasJS.Chart("chartContainer3", {
+			animationEnabled: true,
+			theme: "light2",
+			axisX: {
+				title: "time",
+
+				suffix: "hr"
+      },
+			title:{
+				text: "產能"
+			},
+			axisY:{
+				includeZero: false
+			},
+			data: [{
+				type: "line",
+				dataPoints: [
+					{ x: 1, y: 5 },
+					{ x: 2,y: 30},
+					{ x: 3,y: 20},
+					{ x: 4,y: 40 , indexLabel: "highest",markerColor: "red", markerType: "triangle"  },
+					{ x: 5,y: 15 },
+
+
+				]
+			}]
+		});
+		chart3.render();
+
+		$(document).ready(function () {
+				// Initialize GaugeMeter plugin
+				$(".GaugeMeter").gaugeMeter();
+
+				// Bind new handler to init and update gauges.
+				ko.bindingHandlers.gaugeValue = {
+						init: function(element, valueAccessor) {
+								$(element).gaugeMeter({ percent: ko.unwrap(valueAccessor()) });
+						},
+						update: function(element, valueAccessor) {
+								$(element).gaugeMeter({ percent: ko.unwrap(valueAccessor()) });
+						}
+				};
+
+				var myViewModel = {
+						Percent: ko.observable(50)
+				};
+				ko.applyBindings(myViewModel);
+		});
+
+
+	}
+	document.addEventListener("DOMContentLoaded", function(event) {
+			var g1, g2, g3;
+		var  g1 = new JustGage({
+					id: "g1",
+					value: getRandomInt(0, 100),
+					min: 0,
+					max: 100,
+					label: "X",
+					levelColors: [
+						"#c4daee",
+						"#7575ee",
+						"#8abae5"
+					]
+
+			});
+
+		var  g2 = new JustGage({
+					id: "g2",
+					value: 32,
+					min: 0,
+					max: 100,
+					label: "Y",
+					levelColors: [
+						"#c4daee",
+						"#7575ee",
+						"#8abae5"
+					]
+			});
+
+			var g3 = new JustGage({
+				id: "g3",
+				value: getRandomInt(0, 100),
+				min: 0,
+				max: 100,
+				label: "Z",
+				levelColors: [
+					"#c4daee",
+					"#7575ee",
+					"#8abae5"
+				]
+			});
+
+			setInterval(function() {
+					g1.refresh(getRandomInt(0, 100));
+					g2.refresh(getRandomInt(0, 100));
+					g3.refresh(getRandomInt(0, 100));
+			}, 2500);
+	});
+
+
+
+
+</script>
+<style>
+
+body,
+FOOTER{
+
+    color:#deeafc;
+		font-family:DFKai-sb;
+
+		Background: Linear-Gradient(45deg, #0c4975, #063e59), URL(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACcAAAAnCAQAAAAmqpm+AAAAUUlEQVR4AWMgDvyXJEoV7/AwjnckGzdq3Khxo8apDQvj/kuCIS9OqIYCefFD4tzG+F+NGFW0Mo7ysBvNFaPGjRo3apzkIDfuP89/XipASQgEAF4fpQGYXVnnAAAAAElFTkSuQmCC);
+		Background-Blend-Mode: Lighten;
+		-Moz-Animation: BluePrint 60s Infinite;
+		-Webkit-Animation: BluePrint 60s Infinite;
+		Animation: BluePrint 60s Infinite;
+}
+
+@-moz-keyframes BluePrint{
+		0% {Background-Position: 0 0;}
+		100% {Background-Position: 1100% 100%;}
+}
+
+
+
+@keyframes BluePrint{
+		0% {Background-Position: 0 0;}
+		100% {Background-Position: -100% 100%;}
+}
+
+div{
+		Background:	#051142;
+}
+
+#red {
+	position: absolute;
+	top:70px;
+	left:70px;
+}
+#yellow {
+	position: absolute;
+	top:70px;
+	left:140px;
+}
+#green {
+	position: absolute;
+	top:70px;
+	left:210px;
+}
+
+#g1{
+	position: absolute;
+	top:60px;
+	left:50px;
+	width: 90px;
+	height: 90px;
+
+}
+#g2{
+	position: absolute;
+	top:60px;
+	left:140px;
+	width: 90px;
+	height: 90px;
+}
+#g3 {
+
+
+	position: absolute;
+	top:60px;
+	left:240px;
+		width: 90px;
+		height: 90px;
+
+}
+.GaugeMeter{
+		Position: Relative;
+		Text-Align: Center;
+		Overflow: Hidden;s
+		Cursor: Default;
+		left:30px;
+}
+
+.GaugeMeter SPAN,
+.GaugeMeter B{
+		Margin:	0 23%;
+		Width: 54%;
+		Position: Absolute;
+		Text-Align: Center;
+		Display: Inline-Block;
+		Font-Weight: 100;
+		Font-Family: "Open Sans", Arial;
+		Overflow: Hidden;
+		White-Space: NoWrap;
+		Text-Overflow: Ellipsis;
+}
+
+
+.GaugeMeter S,{}
+.GaugeMeter U{
+		Text-Decoration:None;
+		Font-Size: .30em;
+		Font-Weight: 200;
+
+
+}
+
+
+
+</style>
+
+
+
+</head>
+<body >
+	<br>
+	<h1>Device設備</h1>
+<br>
+	<div class="container">
+		<h2>床</h2>
+		<div class="row clearfix">
+			<div class="col-md-4 column" >
+				<h5>狀態</h5>
+				<div onload="changeLight()"  >
+					<div id="green" style="width: 50px;height: 50px;border-radius: 50%; background-color: #0aed07; "></div>
+					<div id="yellow" style="width: 50px;height: 50px;border-radius: 50%; background-color: #ecef15;"></div>
+					<div id="red" style="width: 50px;height: 50px;border-radius: 50%; background-color: #f20c41;"></div>
+
+				</div>
+			</div>
+
+			<div class="col-md-4 column">
+				<h5>電能</h5>
+				<header id="Header">
+
+            <div class="Preview">
+                <div class="GaugeMeter" id="PreviewGaugeMeter" data-bind="gaugeValue: Percent" data-append="V" data-size=200 data-theme="#447bce" data-width=15 data-style="Arch"  data-animationstep="0"></div>
+
+            </div>
+        </header>
+			</div>
+			<div class="col-md-4 column">
+				<h5>產能</h5>
+				<div id="chartContainer" style="height: 200px; width: 100%;"></div>
+			</div>
+		</div>
+	<hr size="30" color="#051142" >
+		<h3>Robot</h3>
+		<div class="row clearfix">
+			<div class="col-md-4 column">
+				<h5>狀態</h5>
+				<div onload="changeLight()">
+					<div id="green" style="width: 50px;height: 50px;border-radius: 50%; background-color: #0aed07;"></div>
+					<div id="yellow" style="width: 50px;height: 50px;border-radius: 50%; background-color: #ecef15;"></div>
+					<div id="red" style="width: 50px;height: 50px;border-radius: 50%; background-color: #f20c41;"></div>
+
+				</div>
+			</div>
+			<div class="col-md-4 column">
+				<h5>個軸電流量</h5>
+				<div id="g1"></div>
+				<div id="g2"></div>
+				<div id="g3"></div>
+
+
+
+			</div>
+			<div class="col-md-4 column">
+				<h5>動作分析</h5>
+				<div id="chartContainer2" style="height: 200px; width: 100%;"></div>
+			</div>
+		</div>
+
+		<hr size="30" color="#051142" >
+
+		<h3>去刺站</h3>
+		<div class="row clearfix">
+			<div class="col-md-4 column">
+				<h5>狀態</h5>
+				<div onload="changeLight()">
+					<div id="green" style="width: 50px;height: 50px;border-radius: 50%; background-color: #0aed07;"></div>
+					<div id="yellow" style="width: 50px;height: 50px;border-radius: 50%; background-color: #ecef15;"></div>
+					<div id="red" style="width: 50px;height: 50px;border-radius: 50%; background-color: #f20c41;"></div>
+
+				</div>
+			</div>
+			<div class="col-md-4 column">
+				<h5>電能</h5>
+				<header id="Header">
+
+            <div class="Preview">
+                <div class="GaugeMeter" id="PreviewGaugeMeter" data-bind="gaugeValue: Percent" data-append="V" data-size=200 data-theme="#447bce" data-width=15 data-style="Arch"  data-animationstep="0"></div>
+
+            </div>
+        </header>
+			</div>
+			<div class="col-md-4 column">
+				<h5>產能</h5>
+				<div id="chartContainer3" style="height: 200px; width: 100%;"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
